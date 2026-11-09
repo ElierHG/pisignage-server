@@ -24,6 +24,9 @@ var handleClient = function(socket, request) {
         socket.pong()
     })
     socket.on('message', function message(msg) {
+        // Milam's patch: browser players cannot send WebSocket ping frames;
+        // any message from the player proves the connection is alive.
+        socket.isAlive = true
         var messageArguments = ["none"];
         try {
             messageArguments = JSON.parse(msg)     //
